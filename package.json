@@ -1,0 +1,15 @@
+{
+  "name": "aiceo-video-editing-starter",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A practical Codex and HyperFrames video editing starter",
+  "scripts": {
+    "postinstall": "node scripts/setup.mjs",
+    "check": "hyperframes check examples/demo",
+    "preview": "hyperframes preview examples/demo",
+    "render": "node scripts/render.mjs",
+    "scan": "python3 scripts/release_scan.py"
+  },
+  "engines": { "node": ">=22" },
+  "dependencies": { "gsap": "3.14.2", "hyperframes": "0.8.31" }
+}

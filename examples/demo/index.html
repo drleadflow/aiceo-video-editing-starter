@@ -1,0 +1,20 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Two-Line Impact demo</title>
+<script src="vendor/gsap.min.js"></script>
+<style>
+*{box-sizing:border-box}body{margin:0}#demo{position:relative;width:1080px;height:1920px;overflow:hidden;font-family:Arial,sans-serif;color:#fff}
+.ground{position:absolute;inset:0;background:radial-gradient(ellipse at 70% 45%,#203d49,#060b12 72%)}
+.hook{position:absolute;top:390px;left:65px;width:950px;text-align:center}
+.line{display:block;font-weight:900;font-style:italic;white-space:nowrap;letter-spacing:-6px;line-height:1.08;text-shadow:0 8px 14px #0009}
+.first{font-size:176px;color:#fff369}.second{font-size:112px;color:white}
+.body{position:absolute;top:900px;left:100px;width:880px;text-align:center;font-size:52px;line-height:1.4}
+.note{position:absolute;left:80px;bottom:240px;width:920px;text-align:center;font-size:38px;color:#bdd0db}
+</style></head><body>
+<div id="demo" data-composition-id="demo" data-start="0" data-duration="6" data-width="1080" data-height="1920">
+<div class="ground"></div>
+<div class="hook"><span class="line first">EDIT LESS.</span><span class="line second">SAY MORE.</span></div>
+<div class="body"><div>Clear words.</div><div>Purposeful visuals.</div><div>A stronger story.</div></div>
+<div class="note">Your footage belongs in your own project.</div>
+</div>
+<script>const tl=gsap.timeline({paused:true});tl.fromTo('.hook',{y:65,opacity:0},{y:0,opacity:1,duration:.3,ease:'power3.out'},0);tl.fromTo('.body',{opacity:0},{opacity:1,duration:.25},.45);window.__timelines={demo:tl};</script>
+</body></html>

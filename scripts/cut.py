@@ -20,7 +20,7 @@ def main():
     meta=json.loads(run(['ffprobe','-v','error','-show_streams','-show_format','-of','json',str(a.source)]))
     types={s['codec_type'] for s in meta['streams']}
     if not {'video','audio'} <= types:p.error('Source must have video and audio.')
-    duration=float(meta['format']['duration']); ranges=json.loads(a.plan.read_text())['keep']
+    duration=float(meta['format']['duration']); ranges=json.loads(a.plan.read_text(encoding="utf-8"))['keep']
     if not isinstance(ranges,list) or not ranges:p.error('keep must be a nonempty list.')
     previous=0; cursor=0; cuts=[]; filters=[]; labels=[]
     for i,pair in enumerate(ranges):
@@ -38,7 +38,7 @@ def main():
     filters.append(''.join(labels)+f'concat=n={len(cuts)}:v=1:a=1[v][a]')
     words=None
     if a.words:
-        raw=json.loads(a.words.read_text())['words'];words=[]
+        raw=json.loads(a.words.read_text(encoding="utf-8"))['words'];words=[]
         for c in cuts:
             for w in raw:
                 if w.get('type','word')!='word':continue
@@ -50,8 +50,8 @@ def main():
                     p.error('A keep boundary crosses a word. Adjust it before cutting.')
     a.output.parent.mkdir(parents=True,exist_ok=True)
     subprocess.run(['ffmpeg','-hide_banner','-loglevel','error','-n','-i',str(a.source),'-filter_complex',';'.join(filters),'-map','[v]','-map','[a]','-c:v','libx264','-crf','18','-preset','fast','-pix_fmt','yuv420p','-c:a','aac','-b:a','192k','-movflags','+faststart',str(a.output)],check=True)
-    mapping.write_text(json.dumps({'fps':30,'duration':cursor,'cuts':cuts},indent=2))
-    if words is not None:wordsout.write_text(json.dumps({'words':words},indent=2))
+    mapping.write_text(json.dumps({'fps':30,'duration':cursor,'cuts':cuts},indent=2),encoding='utf-8')
+    if words is not None:wordsout.write_text(json.dumps({'words':words},indent=2),encoding='utf-8')
     print(f'Created {a.output}. Review every join. Expected duration: {cursor:.3f}s.')
 
 if __name__=='__main__':main()

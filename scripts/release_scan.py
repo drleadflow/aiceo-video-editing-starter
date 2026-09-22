@@ -22,7 +22,7 @@ for p in files:
     if p.name.startswith('.env') and p.name!='.env.example':bad.append((rel,'environment file'))
     if p.suffix.lower() in ['.mov','.mp4','.mp3','.wav','.gif','.jpg','.jpeg','.png','.webp']:bad.append((rel,'media file'))
     if p.name==Path(__file__).name:continue
-    try:s=p.read_text()
+    try:s=p.read_text(encoding="utf-8")
     except UnicodeDecodeError:bad.append((rel,'unexpected binary'));continue
     if any(re.search(x,s) for x in patterns):bad.append((rel,'potential private data'))
     for line in s.splitlines():

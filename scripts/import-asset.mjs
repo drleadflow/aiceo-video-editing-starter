@@ -1,0 +1,3 @@
+import {copyFileSync,mkdirSync,constants,statSync} from 'node:fs';import {basename,resolve} from 'node:path';
+const [slug,input]=process.argv.slice(2);if(!slug||!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)||!input)throw Error('Usage: npm run import-asset -- my-reel "path to downloaded clip.mp4"');
+if(!statSync(input).isFile())throw Error('Input must be a file');const dir=resolve('projects',slug,'assets','generated');mkdirSync(dir,{recursive:true});const out=dir+'/'+basename(input);copyFileSync(input,out,constants.COPYFILE_EXCL);console.log('Imported '+out+'; inspect framing and mute unwanted audio.');

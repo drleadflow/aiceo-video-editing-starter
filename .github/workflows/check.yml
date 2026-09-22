@@ -1,0 +1,37 @@
+name: Starter checks
+on: [push, pull_request, workflow_dispatch]
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: FFmpeg (Linux)
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - name: FFmpeg (Mac)
+        if: runner.os == 'macOS'
+        run: command -v ffmpeg || brew install ffmpeg
+      - name: FFmpeg (Windows)
+        if: runner.os == 'Windows'
+        run: choco install ffmpeg --yes --no-progress
+      - run: npm ci
+      - run: npm test
+      - run: npm run scan
+      - run: npm run demo:check
+      - run: npm run test:media
+      - run: npm run render
+      - uses: actions/upload-artifact@v4
+        with:
+          name: demo-${{ matrix.os }}
+          path: renders/*.mp4

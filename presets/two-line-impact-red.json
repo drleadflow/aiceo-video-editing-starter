@@ -1,0 +1,26 @@
+{
+  "name": "Two-Line Impact",
+  "lineCount": 2,
+  "firstLine": {
+    "weight": 900,
+    "italic": true,
+    "color": "#ef3340"
+  },
+  "secondLine": {
+    "weight": 900,
+    "italic": true,
+    "color": "#ffffff"
+  },
+  "palette": {
+    "light": "#ff747d",
+    "mid": "#ef3340",
+    "deep": "#a40d1a"
+  },
+  "panel": false,
+  "entranceSeconds": 0.3,
+  "optionalSheen": {
+    "durationSeconds": 0.65,
+    "repeat": 0
+  },
+  "notes": "Use a licensed heavy italic font. Fit both lines inside the safe area, preserve the face, and inspect at phone size. Sample uses system Arial rather than redistributing a font."
+}

@@ -1,50 +1,74 @@
-# Edit videos with Codex and HyperFrames
+# AI CEO Lab Video Editing Starter
 
-A small, inspectable starting point for turning a talking-head recording into a tighter reel. Built from a real iterative editing session: transcript cleanup, two-line hooks, meaningful B-roll, readable graphics, sound timing and versioned exports.
-
-**What actually runs the edit:** Codex is the agent operating local files and commands. HyperFrames renders HTML compositions. FFmpeg cuts and processes media. An ordinary ChatGPT conversation without these execution tools is not the same setup.
+Turn your recording into a reviewed reel with Codex or Claude Code, HyperFrames,
+reusable editing skills and optional AI-generated B-roll.
 
 ## Start here
 
-Install Node.js 22 or newer, Python 3 and FFmpeg. Open this folder in Codex. From its terminal:
+1. **Download ZIP:** use GitHub's Code → Download ZIP, then extract it. Git is optional.
+2. **Set up:** [Mac or Windows instructions](docs/SETUP.md). Run the included setup
+   script to check/install tools with your permission. Internet is required initially.
+3. **Open the extracted folder in Codex or Claude Code.** Use your own assistant account.
+4. **Try the six-second example:** `npm run demo:check`, then `npm run render`.
+   It is silent typography; find the MP4 in `renders/`. No API key required.
+5. **Create your first project:** `npm run new-video -- my-reel`.
+   Copy your recording to `projects/my-reel/assets/source.mp4`.
+
+Tell your assistant:
+
+> Use edit-video to edit projects/my-reel/assets/source.mp4 into a 9:16 reel.
+> Map the hook and storyboard first. Preserve my meaning and complete words.
+> Use the red two-line title preset. Show me a clean dialogue cut before adding
+> captions, B-roll and music. Save a new version and review the actual export.
+
+Codex discovers `.agents/skills/`; Claude Code discovers `.claude/skills/`.
+Reopen the project after setup if skills aren't visible. Open the repository root,
+not only a video subfolder. `npm run sync:skills` mirrors the canonical Claude
+skill folders for Codex; no symlinks or global skill installation are required.
+
+## Choose your workflow
+
+| I want to… | Use |
+| --- | --- |
+| Edit my own recording | `edit-video` |
+| Review pauses / retakes | `cut-silences` / `cut-mistakes` |
+| Plan explanatory visuals | `video-storytelling` |
+| Build compositions / motion | `hyperframes` / `gsap` |
+| Create alternate opening hooks | `hook-variations` |
+| Generate optional B-roll | `higgsfield-broll` |
+| Generate an optional AI presenter | `heygen-presenter` |
+
+[Complete editing workflow](docs/WORKFLOW.md) · [Brief](docs/EDIT-BRIEF.md) ·
+[Providers and costs](docs/PROVIDERS.md) · [Verification status](docs/VERIFICATION.md)
+
+## Included / bring your own
+
+Included: nine skills with their supporting references and scripts, source-to-edit
+mapping, transcript retiming, EDL review, two title palettes, project scaffolding,
+and a synthetic media test. Selected resources come from Nate Herk's student kit;
+[attribution and licenses](docs/PROVENANCE.md) are retained.
+
+Bring your footage, a timed transcript or transcription service, and licensed
+music/fonts. No subscriptions, generation credits, avatar identities, private
+recordings, commercial songs or account credentials are bundled.
+The optional provider skills guide connected tools or website exports; they do
+not silently install a vendor integration or guarantee API access.
+
+## Useful commands
 
 ```sh
-npm install
-npm run check
-npm run render
+npm run doctor
+npm run doctor:renderer
+npm run preview
+npm run new-video -- my-reel
+npm run check -- projects/my-reel/v01
+npm run render -- projects/my-reel/v01
+npm run new-video -- my-reel --from projects/my-reel/v01
+npm test
+npm run test:media
 ```
 
-This renders a six-second typography sample into `renders/`. It needs no API key or footage. It is intentionally silent. First install downloads dependencies; rendering may also download the browser runtime. The pinned HyperFrames version is 0.8.31. macOS is the validation target for this starter; other operating systems need their own smoke check.
-
-## Edit your recording
-
-1. Create `projects/my-reel/v01/` and copy your recording there. Keep the original elsewhere too.
-2. Read [the complete workflow](docs/WORKFLOW.md).
-3. Give Codex the brief in [EDIT-BRIEF.md](docs/EDIT-BRIEF.md), with your file path and desired duration.
-4. Reuse a timed transcript or choose a transcription provider. ElevenLabs is optional and requires your own account. Copy `.env.example` to `.env` only if needed. Never commit the filled file.
-5. Save a cut plan before rendering. The optional cut script below takes explicit keep ranges; it does not decide which words to remove.
-6. Make the first edit, review it, and refine one issue at a time into a new version.
-
-```sh
-python3 scripts/cut.py projects/my-reel/source.mp4 projects/my-reel/keep.json projects/my-reel/v01/cut.mp4
-```
-
-`keep.json` shape: `{"keep": [[0.2, 3.5], [5.1, 8.0]]}`. Ranges are seconds in the original source, sorted and non-overlapping. This utility requires source video and audio, normalizes the edited output to 30 fps, and writes a mapping sidecar. If supplying a transcript, pass `--words words.json`; see the script's help. It performs hard cuts, so listen for clipped consonants and abrupt room tone.
-
-## Included
-
-- A renderable, credential-free typography demo.
-- A portable two-line title design preset, with user-supplied font option.
-- A validated keep-range cutter with an original-to-edited time map and optional transcript retiming.
-- Editing brief, full workflow, quality checklist and lessons learned.
-- A release scan that rejects common credential patterns, local paths and personal-media files.
-
-## Deliberately excluded
-
-Private recordings, transcripts, client transformations, downloaded creator references, meme GIFs, soundboard audio, API keys and third-party brand assets. Supply your own authorized media. A release scan helps catch mistakes but is not a guarantee; review the exact tracked file list before publication.
-
-## Credits
-
-Based on lessons from Nate Herk's [HyperFrames Student Kit](https://github.com/nateherkai/hyperframes-student-kit) and [HyperFrames](https://github.com/heygen-com/hyperframes). The original kit's MIT notice and teaching-kit permission are retained. This starter does not redistribute the original kit's brand assets, footage or fonts. HyperFrames and GSAP remain under their own licenses installed with npm.
-
-The example demonstrates layout mechanics, not automatic editorial judgment. A good edit still needs a clear brief and human review.
+Originals and outputs live in ignored `projects/` and `renders/`. Never publish
+those folders or your `.env`. Updates should be extracted into a separate folder;
+copy your private projects and locally stored settings deliberately. Do not overwrite
+an existing working installation with an unreviewed update.

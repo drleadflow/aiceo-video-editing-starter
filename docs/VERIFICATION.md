@@ -1,15 +1,27 @@
-# Release verification
+# Verification for starter v2
 
-Checked on macOS with Node 22 and FFmpeg on 2026-09-09.
+Verified locally on 2026-09-22, macOS Apple Silicon, Node 22.23.2:
 
-- Pinned dependencies installed successfully.
-- HyperFrames check passed for the sample.
-- Sample rendered to H.264 MP4, 1080x1920, exactly 6 seconds. It is intentionally silent.
-- Keep-range cutter smoke test produced a 2-second file from two source intervals.
-- Word timestamps were remapped correctly through a removed interval.
-- Release-file scan reported no credential patterns, personal media or private paths.
-- No live transcription API call is included in the sample or claimed as tested here.
+- Pinned npm installation and postinstall completed.
+- Nine unit/integration tests passed: transcript preservation and retiming, reviewed
+  cuts, empty cut plans, invalid bounds, beat timing, project version preservation,
+  traversal rejection, asset overwrite refusal, mirrored skill consistency.
+- Synthetic A/V fixture passed: two-second cut, audio/video streams, complete decode,
+  refusal to overwrite and refusal to cut through a timed word.
+- HyperFrames 0.8.31 sample check passed runtime, layout, motion and contrast checks.
+- Six-second sample rendered as H.264 1080x1920. An encoded frame was visually checked.
+- Release scan passed for tracked files. No personal source media or credentials included.
+- npm reported zero vulnerabilities after pinning the transitive adm-zip patch at 0.6.1.
 
-Known dependency finding: npm audit reports a moderate adm-zip symlink extraction advisory, inherited through HyperFrames. npm currently reports no automatic fix. This sample does not import ZIP archives; avoid extracting untrusted archives through the affected dependency. Recheck the upstream fix before upgrading. See https://github.com/advisories/GHSA-vwc7-r8mq-g2x9.
+Limits: this machine already had development tools. A fresh-machine installer test
+and Windows/Intel Mac acceptance are not yet established. The CI matrix is provided
+for Mac, Windows and Linux; check its actual run before advertising platform support.
+No paid ElevenLabs, HeyGen or Higgsfield calls were made. Provider skills support
+connected tools or manual website exports; account access is not bundled. The demo
+is silent typography, not a demonstration of automatic speech editing. The synthetic
+media test uses a diagnostic tone and fictional transcript, not human speech.
 
-This is a tested small starter, not a copy of the private production project or a one-command replacement for editorial judgment. Other operating systems have not been verified.
+The optional GSAP audio-reactive helper requires NumPy in a Python environment;
+local TTS references also have extra dependencies. These are not required for the
+basic editing path and are not installed automatically. Upstream producer-only QA
+scripts were excluded; use the packaged renderer checks plus perceptual review.
